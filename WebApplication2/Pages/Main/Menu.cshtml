@@ -1,0 +1,72 @@
+﻿@page "/menu"
+@model WebApplication2.Pages.Main.MenuModel
+@{
+    ViewData["Title"] = "Меню";
+}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <form method="post" asp-page-handler="Search">
+                <div class="input-group mt-3">
+                    <input type="text" class="form-control" placeholder="Введите инвентарный номер для поиска" name="searchString">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+                    </div>
+                </div>
+            </form>
+
+            @if (!string.IsNullOrEmpty(Model.SearchMessage))
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    @Model.SearchMessage
+                </div>
+            }
+
+            <div class="table-responsive mt-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Наименование</th>
+                            <th>Инвентарный номер</th>
+                            <th>Количество</th>
+                            <th>Год ввода</th>
+                            @* <th>Первоначальная стоимость</th>
+                            <th>Остаточная стоимость</th>
+                            <th>Срок полезного использования</th>
+                            <th>Техническое состояние</th> *@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var asset in Model.Assets)
+                        {
+                            <tr>
+                                <td>@asset.object_name</td>
+                                <td>@asset.inventory_number</td>
+                                <td>@asset.quantity</td>
+                                @* <td>@asset.year_introduction</td>
+                                <td>@asset.initial_cost</td>
+                                <td>@asset.residual_value</td>
+                                <td>@asset.useful_life</td>
+                                <td>@asset.technical_condition</td> *@
+                                <td>
+                                    <a href="/Main/MenuAsset/@asset.id" class="btn btn-info">Подробнее</a>
+                                </td>
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <form method="post" >
+                <div class="btn-group mt-3" role="group" aria-label="Кнопки">
+                    <button type="submit" class="btn btn-primary" onclick="openCamera()">Найти предмет по QR-коду</button>
+                    <button type="submit" name="action" asp-page-handler="ScanQR" class="btn btn-primary">Сканировать QR-код</button>
+                    <button type="submit" name="action" value="CreateExcel" asp-page-handler="CreateExcel" class="btn btn-primary">Создать Excel-таблицу</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

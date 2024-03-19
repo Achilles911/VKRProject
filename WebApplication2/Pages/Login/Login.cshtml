@@ -1,0 +1,25 @@
+﻿@page  "/login"
+@model WebApplication2.Pages.Login.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container">
+    <form method="post" class="border p-4">
+        <div class="font-weight-bold text-center mb-3"><h>Вход</h></div>
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="Credential.UserName" class="form-label">Логин</label>
+            <input type="text" asp-for="Credential.UserName" class="form-control" />
+            <span asp-validation-for="Credential.UserName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Credential.Password" class="form-label">Пароль</label>
+            <input type="password" asp-for="Credential.Password" class="form-control" />
+            <span asp-validation-for="Credential.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block font-weight-bold" style="background-color: white; border-radius: 10px; color: black; width: 100px;">Вход</button>
+        </div>
+    </form>
+</div>

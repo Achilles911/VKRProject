@@ -1,0 +1,45 @@
+﻿@page "/Main/MenuAsset/{id}"
+@model WebApplication2.Pages.Main.MenuAssetModel
+@{
+    ViewData["Title"] = "Меню материальной ценности";
+}
+
+<h1>Материальная ценность: @Model.Asset.object_name</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="objectName">Наименование</label>
+        <input type="text" class="form-control" id="objectName" name="ObjectName" value="@Model.Asset.object_name">
+    </div>
+    <div class="form-group">
+        <label for="inventoryNumber">Инвентарный номер</label>
+        <input type="number" class="form-control" id="inventoryNumber" name="InventoryNumber" value="@Model.Asset.inventory_number">
+    </div>
+    <div class="form-group">
+        <label for="quantity">Количество</label>
+        <input type="number" class="form-control" id="quantity" name="Quantity" value="@Model.Asset.quantity">
+    </div>
+    <div class="form-group">
+        <label for="yearIntroduction">Год ввода</label>
+        <input type="number" class="form-control" id="yearIntroduction" name="YearIntroduction" value="@Model.Asset.year_introduction">
+    </div>
+    <div class="form-group">
+        <label for="initialCost">Первоначальная стоимость</label>
+        <input type="number" class="form-control" id="initialCost" name="InitialCost" value="@Model.Asset.initial_cost">
+    </div>
+    <div class="form-group">
+        <label for="residualValue">Остаточная стоимость</label>
+        <input type="number" class="form-control" id="residualValue" name="ResidualValue" value="@Model.Asset.residual_value">
+    </div>
+    <div class="form-group">
+        <label for="usefulLife">Срок полезного использования</label>
+        <input type="number" class="form-control" id="usefulLife" name="UsefulLife" value="@Model.Asset.useful_life">
+    </div>
+    <div class="form-group">
+        <label for="technicalCondition">Техническое состояние</label>
+        <input type="text" class="form-control" id="technicalCondition" name="TechnicalCondition" value="@Model.Asset.technical_condition">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="/menu" class="btn btn-secondary">Отмена</a>
+</form>
