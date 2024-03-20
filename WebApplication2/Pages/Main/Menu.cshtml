@@ -62,8 +62,11 @@
                     <button type="submit" class="btn btn-primary" onclick="openCamera()">Найти предмет по QR-коду</button>
                     <button type="submit" name="action" asp-page-handler="ScanQR" class="btn btn-primary">Сканировать QR-код</button>
                     <button type="submit" name="action" value="CreateExcel" asp-page-handler="CreateExcel" class="btn btn-primary">Создать Excel-таблицу</button>
-
+                    
                 </div>
+            </form>
+            <form method="get" action="/Main/CreateAsset">
+                <button type="submit" class="btn btn-primary">Создать предмет</button>
             </form>
         </div>
     </div>

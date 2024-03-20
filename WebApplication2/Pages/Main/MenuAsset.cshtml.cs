@@ -78,5 +78,22 @@ namespace WebApplication2.Pages.Main
             return RedirectToPage("/Main/menu");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> OnPostDelete(int id)
+        {
+            var asset = await _context.Assets.FindAsync(id);
+            if (asset == null)
+            {
+                return NotFound();
+            }
+
+            _context.Assets.Remove(asset);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("/Main/menu");
+        }
+
+
     }
+
 }

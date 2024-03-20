@@ -41,5 +41,50 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Сохранить</button>
-    <a href="/menu" class="btn btn-secondary">Отмена</a>
+    <a href="/menu" class="btn btn-secondary">Отмена</a>  
 </form>
+<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Удалить</button>
+
+<!-- Модальное окно подтверждения удаления -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Удаление материальной ценности</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Вы уверены, что хотите удалить эту материальную ценность?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+            $(document).ready(function () {
+                $('#confirmDeleteButton').on('click', function () {
+                    // Отправить запрос на удаление
+                    $.ajax({
+                        url: '@Url.Page("MenuAsset", "OnPostDelete", new { id = Model.Asset.id })',
+                        type: 'POST',
+                        success: function (response) {
+                            // Перенаправить на страницу Menu после удаления
+                            window.location.href = '@Url.Page("/Menu")';
+                        },
+                        error: function (xhr, status, error) {
+                            // Обработать ошибку
+                            console.error(error);
+                        }
+                    });
+                });
+            });
+        
+    </script>
+}
