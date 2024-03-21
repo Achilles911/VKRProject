@@ -9,12 +9,14 @@ namespace WebApplication2.Pages.Main
 {
     public class MenuAssetModel : PageModel
     {
+
         private readonly ApplicationContext _context;
 
         public MenuAssetModel(ApplicationContext context)
         {
             _context = context;
         }
+
 
         public Assets Asset { get; set; }
 
@@ -92,8 +94,5 @@ namespace WebApplication2.Pages.Main
 
             return RedirectToPage("/Main/menu");
         }
-
-
     }
-
 }

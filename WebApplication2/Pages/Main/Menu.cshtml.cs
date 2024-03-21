@@ -14,9 +14,9 @@ namespace WebApplication2.Pages.Main
 {
     public class MenuModel : PageModel
     {
-        private readonly ApplicationContext _context;
+        private readonly IApplicationContext _context;
 
-        public MenuModel(ApplicationContext context)
+        public MenuModel(IApplicationContext context)
         {
             _context = context;
         }
@@ -26,15 +26,16 @@ namespace WebApplication2.Pages.Main
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Assets = await _context.Assets.ToListAsync();
+            Assets = await _context.GetAssetsAsync();
             return Page();
         }
 
-        public IActionResult OnPostCreateExcel()//Создание Excel таблицы
+        public async Task<IActionResult> OnPostCreateExcelAsync()//Создание Excel таблицы
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            
-            var assets = _context.Assets.ToList();// Получаем все записи из таблицы БД
+
+            var assets = await _context.GetAssetsAsync();
+            // Получаем все записи из таблицы БД
             using (var package = new ExcelPackage())// Создаем новый пакет Excel
             {
                
@@ -76,7 +77,7 @@ namespace WebApplication2.Pages.Main
 
         public async Task<IActionResult> OnPostSearchAsync(string searchString)//поиск предметов
         {
-            Assets = await _context.Assets.ToListAsync();
+            Assets = await _context.GetAssetsAsync();
 
             if (string.IsNullOrWhiteSpace(searchString))
             {
@@ -88,9 +89,14 @@ namespace WebApplication2.Pages.Main
             if (int.TryParse(searchString, out int inventoryNumber) && inventoryNumber != 0)
             {
                 // Если введенное значение является числом и не равно нулю
-                Assets = await _context.Assets
+                var assets = await _context.GetAssetsAsync();
+
+                // Применяем метод Where к списку активов
+                Assets = assets
                     .Where(a => a.inventory_number == inventoryNumber)
-                    .ToListAsync();
+                    .ToList();
+
+
 
                 if (Assets.Any())
                 {
@@ -100,7 +106,7 @@ namespace WebApplication2.Pages.Main
                 else
                 {
                     // Если активы не найдены, выводим сообщение
-                    Assets = await _context.Assets.ToListAsync();
+                    Assets = await _context.GetAssetsAsync();
                     SearchMessage = "Не найдено предметов";
                     return Page();
                 }
@@ -111,13 +117,6 @@ namespace WebApplication2.Pages.Main
                 return Page();
             }
         }
-        
-        
-
-
-
-
-
 
     }
 }
