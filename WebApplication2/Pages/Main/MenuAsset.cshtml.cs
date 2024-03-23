@@ -10,9 +10,9 @@ namespace WebApplication2.Pages.Main
     public class MenuAssetModel : PageModel
     {
 
-        private readonly ApplicationContext _context;
+        private readonly IApplicationContext _context;
 
-        public MenuAssetModel(ApplicationContext context)
+        public MenuAssetModel(IApplicationContext context)
         {
             _context = context;
         }

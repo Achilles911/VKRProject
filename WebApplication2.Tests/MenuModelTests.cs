@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApplication2.Tests.Pages.Main
 {
-
-   
     public class MenuPageTests
     {
         [Fact]
@@ -41,10 +39,11 @@ namespace WebApplication2.Tests.Pages.Main
             var pageModel = new MenuModel(mockContext.Object);
 
             // Act
-            var result = pageModel.OnPostCreateExcelAsync();
+            var actionResult = await pageModel.OnPostCreateExcel();
+            var fileResult = actionResult as FileResult;
 
             // Assert
-            var fileResult = Assert.IsType<FileResult>(result);
+            Assert.NotNull(fileResult);
             Assert.Equal("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileResult.ContentType);
             Assert.Equal("Assets.xlsx", fileResult.FileDownloadName);
         }

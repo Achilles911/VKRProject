@@ -30,15 +30,14 @@ namespace WebApplication2.Pages.Main
             return Page();
         }
 
-        public async Task<IActionResult> OnPostCreateExcelAsync()//Создание Excel таблицы
+        public async Task<IActionResult> OnPostCreateExcel()//Создание Excel таблицы
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            var assets = await _context.GetAssetsAsync();
-            // Получаем все записи из таблицы БД
+            var assets = await _context.GetAssetsAsync();// Получаем все записи из таблицы БД
             using (var package = new ExcelPackage())// Создаем новый пакет Excel
             {
-               
+
                 var worksheet = package.Workbook.Worksheets.Add("Assets"); // Добавляем новый лист
 
                 // Заголовки столбцов
@@ -66,7 +65,7 @@ namespace WebApplication2.Pages.Main
                     row++;
                 }
 
-               
+
                 var stream = new MemoryStream(); // Сохраняем Excel-файл
                 package.SaveAs(stream);
                 stream.Position = 0;
@@ -74,6 +73,7 @@ namespace WebApplication2.Pages.Main
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Assets.xlsx");
             }
         }
+
 
         public async Task<IActionResult> OnPostSearchAsync(string searchString)//поиск предметов
         {
