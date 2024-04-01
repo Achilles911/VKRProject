@@ -1,75 +1,80 @@
 ﻿@page "/menu"
 @model WebApplication2.Pages.Main.MenuModel
+
 @{
     ViewData["Title"] = "Меню";
 }
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <form method="post" asp-page-handler="Search">
-                <div class="input-group mt-3">
-                    <input type="text" class="form-control" placeholder="Введите инвентарный номер для поиска" name="searchString">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Меню</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="Search">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Введите инвентарный номер для поиска" name="searchString">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    @if (!string.IsNullOrEmpty(Model.SearchMessage))
+                    {
+                        <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+                            @Model.SearchMessage
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+
+                    <div class="table-responsive">
+                       <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #ddd;">Наименование</th>
+                                    <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #ddd;">Инвентарный номер</th>
+                                    <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #ddd;">Количество</th>
+                                    <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #ddd;">Год ввода</th>
+                                    <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #ddd;">Техническое состояние</th>
+                                    <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #ddd;">Подробнее</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var asset in Model.Assets)
+                                {
+                                    <tr>
+                                        <td>@asset.object_name</td>
+                                        <td>@asset.inventory_number</td>
+                                        <td>@asset.quantity</td>
+                                        <td>@asset.year_introduction</td>
+                                        <td>@asset.technical_condition</td>
+                                        <td>
+                                            <a href="/Main/MenuAsset/@asset.id" class="btn btn-info">Подробнее</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            </form>
 
-            @if (!string.IsNullOrEmpty(Model.SearchMessage))
-            {
-                <div class="alert alert-warning mt-3" role="alert">
-                    @Model.SearchMessage
-                </div>
-            }
+                    <form method="post">
+                        <div class="btn-group mt-3" role="group" aria-label="Кнопки">
+                            <button type="submit" class="btn btn-primary btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Найти предмет по QR-коду</button>
+                            <button type="submit" name="action" asp-page-handler="ScanQR" class="btn btn-primary btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Сканировать QR-код</button>
+                            <button type="submit" name="action" value="CreateExcel" asp-page-handler="CreateExcel" class="btn btn-primary btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Создать Excel-таблицу</button>
 
-            <div class="table-responsive mt-3">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Наименование</th>
-                            <th>Инвентарный номер</th>
-                            <th>Количество</th>
-                            <th>Год ввода</th>
-                            @* <th>Первоначальная стоимость</th>
-                            <th>Остаточная стоимость</th>
-                            <th>Срок полезного использования</th>
-                            <th>Техническое состояние</th> *@
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var asset in Model.Assets)
-                        {
-                            <tr>
-                                <td>@asset.object_name</td>
-                                <td>@asset.inventory_number</td>
-                                <td>@asset.quantity</td>
-                                @* <td>@asset.year_introduction</td>
-                                <td>@asset.initial_cost</td>
-                                <td>@asset.residual_value</td>
-                                <td>@asset.useful_life</td>
-                                <td>@asset.technical_condition</td> *@
-                                <td>
-                                    <a href="/Main/MenuAsset/@asset.id" class="btn btn-info">Подробнее</a>
-                                </td>
-                            </tr>
-                            
-                        }
-                    </tbody>
-                </table>
+                        </div>
+                    </form>
+
+                    <form method="get" action="/Main/CreateAsset">
+                        <button type="submit" class="btn btn-primary">Создать предмет</button>
+                    </form>
+                </div>
             </div>
-            <form method="post" >
-                <div class="btn-group mt-3" role="group" aria-label="Кнопки">
-                    <button type="submit" class="btn btn-primary" onclick="openCamera()">Найти предмет по QR-коду</button>
-                    <button type="submit" name="action" asp-page-handler="ScanQR" class="btn btn-primary">Сканировать QR-код</button>
-                    <button type="submit" name="action" value="CreateExcel" asp-page-handler="CreateExcel" class="btn btn-primary">Создать Excel-таблицу</button>
-                    
-                </div>
-            </form>
-            <form method="get" action="/Main/CreateAsset">
-                <button type="submit" class="btn btn-primary">Создать предмет</button>
-            </form>
         </div>
     </div>
-</div>
-
-
