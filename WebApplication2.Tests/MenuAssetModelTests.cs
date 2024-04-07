@@ -24,7 +24,7 @@ namespace WebApplication2.Tests
             var pageModel = new MenuAssetModel(mockContext.Object);
 
             // Act
-            var result = await pageModel.OnPostDelete(1);
+            var result = await pageModel.OnPostDeleteAsync(1);
 
             // Assert
             var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);

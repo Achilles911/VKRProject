@@ -4,87 +4,63 @@
     ViewData["Title"] = "Меню материальной ценности";
 }
 <body>
-    <h1>Материальная ценность: @Model.Asset.object_name</h1>
-
+    <h1>Материальная ценность: @Model.Asset.inventory_number</h1>
     <form method="post">
+    <div class="form-group">
+        <label for="objectName">Наименование</label>
+        <input type="text" class="form-control" id="objectName" name="ObjectName" value="@Model.Asset.object_name" required>
+    </div>
+    <div class="form-group">
+        <label for="inventoryNumber">Инвентарный номер</label>
+        <input type="number" class="form-control" id="inventoryNumber" name="InventoryNumber" value="@Model.Asset.inventory_number" required>
+
+    </div>
+    <div class="form-group">
+        <label for="quantity">Количество</label>
+        <input type="number" class="form-control" id="quantity" name="Quantity" value="@Model.Asset.quantity" required>
+
+    </div>
+    <div class="form-group">
+        <label for="yearIntroduction">Год ввода</label>
+        <input type="number" class="form-control" id="yearIntroduction" name="YearIntroduction" value="@Model.Asset.year_introduction" required>
+
+    </div>
+    <div class="form-group">
+        <label for="initialCost">Первоначальная стоимость</label>
+        <input type="number" class="form-control" id="initialCost" name="InitialCost" value="@Model.Asset.initial_cost" required>
+
+    </div>
+    <div class="form-group">
+        <label for="residualValue">Остаточная стоимость</label>
+        <input type="number" class="form-control" id="residualValue" name="ResidualValue" value="@Model.Asset.residual_value" required>
+
+    </div>
+    <div class="form-group">
+        <label for="usefulLife">Срок полезного использования</label>
+        <input type="number" class="form-control" id="usefulLife" name="UsefulLife" value="@Model.Asset.useful_life" required>
+
+    </div>
+    <div class="form-group">
+        <label for="technicalCondition">Техническое состояние</label>
+        <input type="text" class="form-control" id="technicalCondition" name="TechnicalCondition" value="@Model.Asset.technical_condition" required>
+
+    </div>
         <div class="form-group">
-            <label for="objectName">Наименование</label>
-            <input type="text" class="form-control" id="objectName" name="ObjectName" value="@Model.Asset.object_name">
-        </div>
-        <div class="form-group">
-            <label for="inventoryNumber">Инвентарный номер</label>
-            <input type="number" class="form-control" id="inventoryNumber" name="InventoryNumber" value="@Model.Asset.inventory_number">
-        </div>
-        <div class="form-group">
-            <label for="quantity">Количество</label>
-            <input type="number" class="form-control" id="quantity" name="Quantity" value="@Model.Asset.quantity">
-        </div>
-        <div class="form-group">
-            <label for="yearIntroduction">Год ввода</label>
-            <input type="number" class="form-control" id="yearIntroduction" name="YearIntroduction" value="@Model.Asset.year_introduction">
-        </div>
-        <div class="form-group">
-            <label for="initialCost">Первоначальная стоимость</label>
-            <input type="number" class="form-control" id="initialCost" name="InitialCost" value="@Model.Asset.initial_cost">
-        </div>
-        <div class="form-group">
-            <label for="residualValue">Остаточная стоимость</label>
-            <input type="number" class="form-control" id="residualValue" name="ResidualValue" value="@Model.Asset.residual_value">
-        </div>
-        <div class="form-group">
-            <label for="usefulLife">Срок полезного использования</label>
-            <input type="number" class="form-control" id="usefulLife" name="UsefulLife" value="@Model.Asset.useful_life">
-        </div>
-        <div class="form-group">
-            <label for="technicalCondition">Техническое состояние</label>
-            <input type="text" class="form-control" id="technicalCondition" name="TechnicalCondition" value="@Model.Asset.technical_condition">
+                <label for="qrCodeImage">QR Code</label>
+                <img id="qrCodeImage" src="@Model.QRCodeImageUrl" alt="QR Code">
+
         </div>
 
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-        <a href="/menu" class="btn btn-secondary">Отмена</a>
-    </form>
-    <form method="post" asp-page-handler="Delete">
-        <button type="submit" class="btn btn-danger" name="action" value="Delete">Удалить</button>
-    </form>
+        <div><button type="submit" asp-page-handler="Delete" class="btn btn-danger" name="action" value="Delete">Удалить</button></div>
+        <div lass="form-group">
+            <input type="hidden" name="InventoryNumber" value="@Model.Asset.inventory_number" />
+            <button type="submit" class="btn btn-danger" name="action" value="Print" asp-page-handler="Print">Печать</button>
+        </div>
+
+        <div class="form-group"><button type="submit" class="btn btn-primary">Сохранить</button></div>
+        <div class="form-group"> <a href="/menu" class="btn btn-secondary">Отмена</a></div>
+       
+</form>
+
 </body>
-    @* <!-- Модальное окно подтверждения удаления -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Удаление материальной ценности</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Вы уверены, что хотите удалить эту материальную ценность?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <button class="btn btn-danger" id="confirmDeleteButton" data-id="@Model.Asset.id" data-page-url="@Url.Page("/Menu")">Удалить</button>
-                </div>
-            </div>
-        </div>
-    </div> *@
-    
-    @* <script>
-        $(document).ready(function () {
-            $('#confirmDeleteButton').on('click', function () {
-                // Отправить запрос на удаление
-                $.ajax({
-                    url: '@Url.Page("MenuAsset", "OnPostDelete", new { id = Model.Asset.id })',
-                    type: 'POST',
-                    success: function (response) {
-                        // Перенаправить на страницу Menu после удаления
-                        window.location.href = '@Url.Page("/Menu")';
-                    },
-                    error: function (xhr, status, error) {
-                        // Обработать ошибку
-                        console.error(error);
-                    }
-                });
-            });
-        });
-
-    </script> *@
+   
