@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using OfficeOpenXml;
 using System.IO;
@@ -8,8 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Data;
 using WebApplication2.Data.Models;
-using ZXing;
-using System;
+
 
 
 namespace WebApplication2.Pages.Main
@@ -25,6 +23,8 @@ namespace WebApplication2.Pages.Main
 
         public IList<Assets> Assets { get; set; }
         public string SearchMessage { get; set; }
+
+
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -119,64 +119,5 @@ namespace WebApplication2.Pages.Main
                 return Page();
             }
         }
-        //public async Task<IActionResult> OnPostSearchByQRCodeAsync(IFormFile qrImage)
-        //{
-        //    if (qrImage == null || qrImage.Length == 0)
-        //    {
-        //        // Обработка случая, когда файл не был загружен
-        //        return Page();
-        //    }
-
-        //    try
-        //    {
-        //        using (var memoryStream = new MemoryStream())
-        //        {
-        //            await qrImage.CopyToAsync(memoryStream);
-        //            memoryStream.Position = 0;
-
-        //            var barcodeReader = new BarcodeReader();
-        //            var imageBytes = memoryStream.ToArray(); // Преобразование изображения в массив байтов
-        //            var result = barcodeReader.Decode(imageBytes); // Декодирование массива байтов
-
-        //            if (result != null && int.TryParse(result.Text, out int inventoryNumber))
-        //            {
-        //                var asset = await _context.FindAssetAsync(inventoryNumber);
-        //                if (asset != null)
-        //                {
-        //                    // Найдена материальная ценность по инвентарному номеру из QR-кода
-        //                    return RedirectToPage("/Main/MenuAsset", new { id = asset.id });
-        //                }
-        //                else
-        //                {
-        //                    // Материальная ценность не найдена по инвентарному номеру из QR-кода
-        //                    SearchMessage = $"Материальная ценность с инвентарным номером {inventoryNumber} не найдена";
-        //                }
-        //            }
-        //            else
-        //            {
-        //                // Не удалось распознать QR-код как число инвентарного номера
-        //                SearchMessage = "QR-код не содержит действительного инвентарного номера";
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Обработка исключений при декодировании QR-кода
-        //        SearchMessage = "Произошла ошибка при обработке QR-кода: " + ex.Message;
-        //    }
-
-        //    // Возвращаем страницу с сообщением о результате поиска
-        //    return Page();
-        //}
-
-
-
-
-
-
-
-
-
-
     }
 }

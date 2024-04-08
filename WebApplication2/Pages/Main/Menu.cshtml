@@ -1,4 +1,4 @@
-﻿@page "/menu"
+﻿@page "/Menu"
 @model WebApplication2.Pages.Main.MenuModel
 
 @{
@@ -19,7 +19,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" >
                         <form method="post" asp-page-handler="Search">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Введите инвентарный номер для поиска" name="searchString">
@@ -28,7 +28,6 @@
                                 </div>
                             </div>
                         </form>
-
                         @if (!string.IsNullOrEmpty(Model.SearchMessage))
                         {
                             <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
@@ -38,17 +37,21 @@
                                 </button>
                             </div>
                         }
+                    </div>
+
+                    <div class="card-body" style="max-height: 30em; overflow-y: auto;">
+                        
 
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #007bff; color: white;">Наименование</th>
-                                        <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #007bff; color: white;">Инвентарный номер</th>
-                                        <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #007bff; color: white;">Количество</th>
-                                        <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #007bff; color: white;">Год ввода</th>
-                                        <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #007bff; color: white;">Техническое состояние</th>
-                                        <th scope="col" style="font-size: 16px; font-weight: bold; background-color: #007bff; color: white;">Подробнее</th>
+                                        <th scope="col">Наименование</th>
+                                        <th scope="col">Инвентарный номер</th>
+                                        <th scope="col">Количество</th>
+                                        <th scope="col">Год ввода</th>
+                                        <th scope="col">Техническое состояние</th>
+                                        <th scope="col">Подробнее</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,12 +71,9 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-
