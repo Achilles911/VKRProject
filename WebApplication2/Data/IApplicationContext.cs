@@ -9,8 +9,10 @@ namespace WebApplication2.Data
     {
         Task<List<Assets>> GetAssetsAsync();
         DbSet<Assets> Assets { get; }
+        DbSet<Users> Users { get; }
+
         Task<Assets> FindAssetAsync(int id);
         Task SaveChangesAsync();
-        Task<Assets> FindAsync(int id);
+        Task<Users> FindUserAsync(int id);
     }
 }

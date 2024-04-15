@@ -12,7 +12,6 @@ namespace WebApplication2.Data
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }
-
         public DbSet<Users> Users { get; set; }
         public DbSet<Assets> Assets { get; set; }
 
@@ -22,17 +21,19 @@ namespace WebApplication2.Data
         }
         public async Task<Assets> FindAssetAsync(int id)
         {
-            return await Assets.FindAsync(id);
+            var asset = Assets.FirstOrDefault(a => a.id == id);
+            return await Task.FromResult(asset);
+        }
+        public async Task<Users> FindUserAsync(int id)
+        {
+            var user = Users.FirstOrDefault(a => a.Id == id);
+            return await Task.FromResult(user);
         }
         public async Task SaveChangesAsync()
         {
             await base.SaveChangesAsync();
         }
-        public async Task<Assets> FindAsync(int id)
-        {
-            var asset = Assets.FirstOrDefault(a => a.id == id);
-            return await Task.FromResult(asset);
-        }
+       
     }
     
 

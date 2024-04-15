@@ -27,9 +27,9 @@
     <div class="container">
         @RenderBody()
     </div>
-    <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #f8f9fa; padding: 10px;">
+    @* <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #f8f9fa; padding: 10px;">
         <span>ФГБОУ ВО МГТУ СТАНКИН, факультет «Информационных технологий и систем управления»</span>
-    </div>
+    </div> *@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -4,63 +4,65 @@
     ViewData["Title"] = "Меню материальной ценности";
 }
 <body>
-    <h1>Материальная ценность: @Model.Asset.inventory_number</h1>
-    <form method="post">
-    <div class="form-group">
-        <label for="objectName">Наименование</label>
-        <input type="text" class="form-control" id="objectName" name="ObjectName" value="@Model.Asset.object_name" required>
-    </div>
-    <div class="form-group">
-        <label for="inventoryNumber">Инвентарный номер</label>
+    <div class="container">
+        <form method="post">
+            <div class="row justify-content-center">   
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="objectName">Наименование</label>
+        <input type="text" class="form-control" id="objectName" name="ObjectName" value="@Model.Asset.object_name" required> 
+                    </div>
+                    <div class="form-group">
+                        <label for="inventoryNumber">Инвентарный номер</label>
         <input type="number" class="form-control" id="inventoryNumber" name="InventoryNumber" value="@Model.Asset.inventory_number" required>
 
-    </div>
-    <div class="form-group">
-        <label for="quantity">Количество</label>
-        <input type="number" class="form-control" id="quantity" name="Quantity" value="@Model.Asset.quantity" required>
-
-    </div>
-    <div class="form-group">
-        <label for="yearIntroduction">Год ввода</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Количество</label>
+                        <input type="number" class="form-control" id="quantity" name="Quantity" value="@Model.Asset.quantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="yearIntroduction">Год ввода</label>
         <input type="number" class="form-control" id="yearIntroduction" name="YearIntroduction" value="@Model.Asset.year_introduction" required>
 
-    </div>
-    <div class="form-group">
-        <label for="initialCost">Первоначальная стоимость</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="initialCost">Первоначальная стоимость</label>
         <input type="number" class="form-control" id="initialCost" name="InitialCost" value="@Model.Asset.initial_cost" required>
 
-    </div>
-    <div class="form-group">
-        <label for="residualValue">Остаточная стоимость</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="residualValue">Остаточная стоимость</label>
         <input type="number" class="form-control" id="residualValue" name="ResidualValue" value="@Model.Asset.residual_value" required>
 
-    </div>
-    <div class="form-group">
-        <label for="usefulLife">Срок полезного использования</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="usefulLife">Срок полезного использования</label>
         <input type="number" class="form-control" id="usefulLife" name="UsefulLife" value="@Model.Asset.useful_life" required>
 
+                    </div>
+                    <div class="form-group">
+                        <label for="technicalCondition">Техническое состояние</label>
+        <input type="text" class="form-control" id="technicalCondition" name="TechnicalCondition" value="@Model.Asset.technical_condition">
+
+                    </div>
+                    <div class="form-group">
+                        <img id="qrCodeImage" src="@Model.QRCodeImageUrl" alt="QR Code" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                    <button type="submit" asp-page-handler="DeleteAsset" class="btn btn-danger mr-2" name="action" value="Delete">Удалить</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary mr-1" name="action" value="Print" asp-page-handler="Print">Печать</button>
+                    <a href="/Menu" class="btn btn-secondary">Отмена</a>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="technicalCondition">Техническое состояние</label>
-        <input type="text" class="form-control" id="technicalCondition" name="TechnicalCondition" value="@Model.Asset.technical_condition" required>
-
-    </div>
-        <div class="form-group">
-                <label for="qrCodeImage">QR Code</label>
-                <img id="qrCodeImage" src="@Model.QRCodeImageUrl" alt="QR Code">
-
-        </div>
-
-        <div><button type="submit" asp-page-handler="Delete" class="btn btn-danger" name="action" value="Delete">Удалить</button></div>
-        <div lass="form-group">
-            <input type="hidden" name="InventoryNumber" value="@Model.Asset.inventory_number" />
-            <button type="submit" class="btn btn-danger" name="action" value="Print" asp-page-handler="Print">Печать</button>
-        </div>
-
-        <div class="form-group"><button type="submit" class="btn btn-primary">Сохранить</button></div>
-        <div class="form-group"> <a href="/menu" class="btn btn-secondary">Отмена</a></div>
-       
-</form>
-
 </body>
-   

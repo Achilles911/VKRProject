@@ -6,21 +6,35 @@
 }
 
 <body>
+    
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">
-                            <form method="post">
-                                <button type="submit" class="btn btn-primary btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Найти предмет по QR-коду</button>
-                                <button type="submit" name="action" value="CreateExcel" asp-page-handler="CreateExcel" class="btn btn-primary btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Создать Excel-таблицу</button>
-                                <a href="/Main/CreateAsset" class="btn btn-info btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Создать предмет</a>
-                            </form>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="card-title">
+                                <form method="post">
+                                    <button type="submit" name="action" value="CreateExcel" asp-page-handler="CreateExcel" class="btn btn-primary btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Создать Excel-таблицу</button>
+                                    <a href="/Main/CreateAsset" class="btn btn-info btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Создать предмет</a>
+                                    <a href="/Workers" class="btn btn-info btn-lg" style="background-color: #007bff; color: white; font-size: 16px; border-radius: 5px;">Персонал</a> 
+                                </form>
+                            </div>
 
+                            <div>
+                                <form method="post" enctype="multipart/form-data" asp-page-handler="DecodeQrCode">
+                                    <div class="form-group">
+                                        <input type="file" class="form-control-file" id="qrCodeImage" name="qrCodeImage" accept="image/*" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Поиск по QR-коду</button>
+                                </form>
+                            </div>
                         </div>
+
+
                     </div>
                     <div class="card-body">
+
                         <form method="post" asp-page-handler="Search">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Введите инвентарный номер для поиска" name="searchString">
@@ -39,7 +53,6 @@
                             </div>
                         }
                     </div>
-
                     <div class="card-body" style="max-height: 30em; overflow-y: auto;">
                         
 

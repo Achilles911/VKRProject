@@ -122,14 +122,9 @@ namespace WebApplication2.Pages.Main
                 Asset.useful_life = usefulLife;
             }
 
-            if (string.IsNullOrWhiteSpace(technicalCondition))
-            {
-                ModelState.AddModelError("TechnicalCondition", "Неверное значение.");
-            }
-            else
-            {
-                Asset.technical_condition = technicalCondition;
-            }
+            
+            Asset.technical_condition = technicalCondition;
+            
 
             if (!ModelState.IsValid)
             {
@@ -142,7 +137,7 @@ namespace WebApplication2.Pages.Main
         }
 
 
-        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        public async Task<IActionResult> OnPostDeleteAssetAsync(int id)
         {
             var assetToDelete = await _context.FindAssetAsync(id);
 
@@ -156,6 +151,7 @@ namespace WebApplication2.Pages.Main
 
             return RedirectToPage("/Main/menu");
         }
+
         public async Task<IActionResult> OnPostGenerateQRCodeAsync(int inventoryNumber)
         {
             string inventoryNumberStr = inventoryNumber.ToString();

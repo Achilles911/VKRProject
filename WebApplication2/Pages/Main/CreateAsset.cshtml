@@ -4,42 +4,57 @@
     ViewData["Title"] = "Создать предмет";
 }
 
-<h1>Создать предмет</h1>
-
-<form method="post">
-    <div class="form-group">
-        <label for="objectName">Наименование <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="objectName" name="ObjectName" required>
+<body>
+    <div class="container">
+        
+        <form method="post">
+            <div class="row"> 
+                <div class="col-md-12">
+                    <h1 class="text-center mt-4 mb-4">Создание предмета</h1>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="objectName">Наименование <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="objectName" name="ObjectName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inventoryNumber">Инвентарный номер <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="inventoryNumber" name="InventoryNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Количество <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="quantity" name="Quantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="yearIntroduction">Год ввода <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="yearIntroduction" name="YearIntroduction" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="initialCost">Первоначальная стоимость <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="initialCost" name="InitialCost" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="residualValue">Остаточная стоимость <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="residualValue" name="ResidualValue" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="usefulLife">Срок полезного использования <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="usefulLife" name="UsefulLife" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="technicalCondition">Техническое состояние</label>
+                        <input type="text" class="form-control" id="technicalCondition" name="TechnicalCondition">
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <button type="submit" class="btn btn-primary mr-2">Добавить</button>
+                    <a href="/Menu" class="btn btn-secondary">Отмена</a>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="inventoryNumber">Инвентарный номер <span class="text-danger">*</span></label>
-        <input type="number" class="form-control" id="inventoryNumber" name="InventoryNumber" required>
-    </div>
-    <div class="form-group">
-        <label for="quantity">Количество <span class="text-danger">*</span></label>
-        <input type="number" class="form-control" id="quantity" name="Quantity" required>
-    </div>
-    <div class="form-group">
-        <label for="yearIntroduction">Год ввода <span class="text-danger">*</span></label>
-        <input type="number" class="form-control" id="yearIntroduction" name="YearIntroduction" required>
-    </div>
-    <div class="form-group">
-        <label for="initialCost">Первоначальная стоимость <span class="text-danger">*</span></label>
-        <input type="number" class="form-control" id="initialCost" name="InitialCost" required>
-    </div>
-    <div class="form-group">
-        <label for="residualValue">Остаточная стоимость <span class="text-danger">*</span></label>
-        <input type="number" class="form-control" id="residualValue" name="ResidualValue" required>
-    </div>
-    <div class="form-group">
-        <label for="usefulLife">Срок полезного использования <span class="text-danger">*</span></label>
-        <input type="number" class="form-control" id="usefulLife" name="UsefulLife" required>
-    </div>
-    <div class="form-group">
-        <label for="technicalCondition">Техническое состояние</label>
-        <input type="text" class="form-control" id="technicalCondition" name="TechnicalCondition">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-    <a href="/menu" class="btn btn-secondary">Отмена</a>
-</form>
+</body>

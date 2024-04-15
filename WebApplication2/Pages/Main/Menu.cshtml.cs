@@ -7,11 +7,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Data;
 using WebApplication2.Data.Models;
+using Microsoft.AspNetCore.Http;
+using System.Drawing;
+using System;
+using QRCoder;
+using ZXing;
 
 
 
 namespace WebApplication2.Pages.Main
 {
+
     public class MenuModel : PageModel
     {
         private readonly IApplicationContext _context;
@@ -117,6 +123,91 @@ namespace WebApplication2.Pages.Main
             {
                 // Если введенное значение не является числом или равно нулю, ничего не делаем
                 return Page();
+            }
+
+        }
+        public async Task<IActionResult> OnPostDecodeQrCodeAsync(IFormFile qrCodeImage)
+        {
+            if (qrCodeImage == null || qrCodeImage.Length == 0)
+            {
+                // Handle invalid input
+                return BadRequest("No image uploaded");
+            }
+
+            // Check if the uploaded file is an image
+            if (!qrCodeImage.ContentType.StartsWith("image/"))
+            {
+                return BadRequest("Uploaded file is not an image");
+            }
+
+            try
+            {
+                // Read the uploaded image into a MemoryStream
+                using (var memoryStream = new MemoryStream())
+                {
+                    await qrCodeImage.CopyToAsync(memoryStream);
+
+                    // Decode the QR code from the image
+                    string decodedText = DecodeQrCode(memoryStream);
+
+                    // Try parsing the decoded text as an integer (inventory number)
+                    if (!int.TryParse(decodedText, out int inventoryNumber))
+                    {
+                        // If parsing fails, return an error
+                        return BadRequest("Decoded text is not a valid inventory number");
+                    }
+
+                    // Now use the inventory number to search for the asset
+                    Assets = await _context.GetAssetsAsync();
+                    var asset = Assets.FirstOrDefault(a => a.inventory_number == inventoryNumber);
+
+                    if (asset != null)
+                    {
+                        // If the asset is found, return the page with the asset details
+                        return Page();
+                    }
+                    else
+                    {
+                        // If the asset is not found, return the page with a message
+                        Assets = await _context.GetAssetsAsync();
+                        SearchMessage = "Asset not found";
+                        return Page();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any errors that occur during the process
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+
+        private string DecodeQrCode(Stream imageStream)
+        {
+            // Создаем объект BarcodeReader для декодирования QR-кода
+            var barcodeReader = new BarcodeReader();
+
+            // Читаем изображение из потока в виде массива байтов
+            byte[] imageBytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                imageStream.CopyTo(memoryStream);
+                imageBytes = memoryStream.ToArray();
+            }
+
+            // Декодируем QR-код с помощью ZXing
+            var result = barcodeReader.Decode(imageBytes);
+
+            // Если удалось распознать QR-код, возвращаем его содержимое
+            if (result != null)
+            {
+                return result.Text;
+            }
+            else
+            {
+                // Если QR-код не удалось распознать, возвращаем null или выбрасываем исключение
+                throw new Exception("QR-код не удалось распознать.");
             }
         }
     }

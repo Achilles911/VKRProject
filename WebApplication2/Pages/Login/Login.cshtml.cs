@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using WebApplication2.Data;
 
 namespace WebApplication2.Pages.Login
 {
+    [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly UserRepository _userRepository;
@@ -37,8 +39,16 @@ namespace WebApplication2.Pages.Login
                 return Page();
             }
         }
-    }
+        public IActionResult OnGet(string returnUrl = null)
+        {
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                TempData["ReturnUrl"] = returnUrl;
+            }
+            return Page();
+        }
 
+    }
     public class Credential
     {
         [Required(ErrorMessage = "Username is required")]
@@ -48,4 +58,6 @@ namespace WebApplication2.Pages.Login
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }
+
+
 }

@@ -1,0 +1,63 @@
+﻿@page "/Workers/InfoWorker"
+@model WebApplication2.Pages.Another.InfoWorkerModel
+@{
+    ViewData["Title"] = "Информация о работнике";
+}
+<body>
+    <div class="container">
+        <form method="post">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="FullName">Полное имя</label>
+                        <input type="text" class="form-control" id="FullName" name="FullName" value="@Model.User.FullName" required>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="email" class="form-control" id="Email" name="Email" value="@Model.User.Email" required>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="Password">Пароль</label>
+                        <input type="text" class="form-control" id="Password" name="Password" value="@Model.User.Password" required>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="PhoneNumber">Номер телефона</label>
+                        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="@Model.User.PhoneNumber" required>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="Role">Роль</label>
+                        <select class="form-control" id="Role" name="Role" required>
+                            <option value="Работник">Работник</option>
+                            <option value="Администратор">Администратор</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                        <button type="submit" asp-page-handler="DeleteUser" asp-route-id="@Model.User.Id" class="btn btn-danger mr-2" value="Delete">Удалить</button>
+                        <a href="/Workers" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#PhoneNumber').mask('+7(000)000-00-00');
+        });
+    </script>
+}

@@ -1,0 +1,58 @@
+﻿@page "/CreateWorker"
+@model WebApplication2.Pages.Another.CreateWorkerModel
+@{
+    ViewData["Title"] = "Добавить работника";
+}
+<body>
+    <div class="container">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center mt-4 mb-4 text-center">Добавление работника</h1>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="FullName">Полное имя<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="FullName" name="FullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="Email" name="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Пароль <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="Password" name="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="PhoneNumber">Номер телефона <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Role">Роль</label>
+                        <select class="form-control" id="Role" name="Role" required>
+                            <option value="Работник">Работник</option>
+                            <option value="Администратор">Администратор</option>
+                        </select>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 text-center">
+                            <button type="submit" class="btn btn-primary mr-2">Добавить</button>
+                            <a href="/Workers" class="btn btn-secondary">Отмена</a>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</body>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#PhoneNumber').mask('+7(000)000-00-00');
+        });
+    </script>
+}

@@ -22,13 +22,7 @@ namespace WebApplication2.Pages.Main
 
         public async Task<IActionResult> OnPostAsync(string objectName, int inventoryNumber, int quantity, int yearIntroduction, decimal initialCost, decimal residualValue, int usefulLife, string technicalCondition)
         {
-            if (string.IsNullOrEmpty(objectName) || quantity <= 0 || yearIntroduction <= 0 || initialCost <= 0 || residualValue <= 0 || usefulLife <= 0)
-            {
-                // Проверяем, заполнены ли все обязательные поля
-                TempData["ErrorMessage"] = "Заполните все обязательные поля";
-                return RedirectToPage();
-            }
-            // Получение максимального идентификатора из базы данных
+
             var maxId = _context.Assets.Max(a => (int?)a.id) ?? 0;
             // Увеличение максимального идентификатора на единицу
             var newId = maxId + 1;
